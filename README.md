@@ -1,0 +1,2 @@
+<img width="879" height="548" alt="invocer" src="https://github.com/user-attachments/assets/8a4f6f52-169c-49ce-b5e3-ebdb4f7bb831" />
+при нажатие на кнопку старт будет запускаться игра где надо будет крафтить нужные скилы
