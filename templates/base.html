@@ -3,69 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>invoker-game</title>
-    <style>
-        .firstBlock{
-            align-items: center;
-            display: flex;
-            height: calc(100% - 100px);
-            height: 550px;
-            justify-content: center;
-            padding-bottom: 10px;
-        }
-        .background-color{
-            background-size: 110%;
-            background-color: black;
-        }
-        h1{
-            color: white;
-            text-align: center;
-            font-weight: 400;
-        }
-        .foto1{
-            width: 128px;
-            height: 128px;
-            margin-left: 100px;
-        }
-        .spells{
-            align-items: center;
-            background-color: #141313;
-            border-radius: 20px;
-            -webkit-border-radius: 20px;
-            -moz-border-radius: 20px;
-            -ms-border-radius: 20px;
-            -o-border-radius: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, .5);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            justify-content: space-between;
-            padding: 15px;
-            width: 300px;
-        }
-        p{
-            color: white;
-        }
-        .spell__list {
-            display: flex;
-            flex-direction: column;
-            list-style: none;
-            margin: 0 auto;
-            overflow-y: scroll;
-            height: 500px;
-            margin-top: 0%;
-            position: static;
-        }
-        h2{
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
 </head>
 <body class="background-color">
     <div class="firstBlock">
         <div style="position: relative; display: block; margin-left: auto; margin-right: auto;">
             <h1>Invoker Game by Urii455</h1>
             <img src="https://invoker-game.com/static/media/invoker2.d869abaf521e85197572.gif" alt="" width="600px" class="foto1">
-            <button style="margin-top: 20px;" class="button">Start Game</button>
+            <button class="start-btn" id="btn">
+                ▶ СТАРТ
+            </button>
+            <ul class="spells__group"><li class="square"><img src="/static/media/invoker_quas.5750837f318a07971a3f.png" alt="quas"><span>Q</span></li><li class="square"><img src="/static/media/invoker_wex.baabeddb7150b37f5752.png" alt="wex"><span>W</span></li><li class="square"><img src="/static/media/invoker_exort.a56f53208bb284a9d01c.png" alt="exort"><span>E</span></li><li class="square"><img src="/static/media/no_spell.5ac56c73ca6cbf3b9ac0.png" alt="spell1"><span>D</span></li><li class="square"><img src="/static/media/no_spell.5ac56c73ca6cbf3b9ac0.png" alt="spell2"><span>F</span></li><li class="square"><img src="/static/media/invoker_invoke.a06dc8565470549cac5f.png" alt="invoke"><span>R</span></li></ul>
         </div>
         <div class="spells">
             <h2>скилы</h2>
@@ -109,5 +57,6 @@
             </ul>
         </div>
     </div>
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
 </body> 
 </html>

@@ -1,0 +1,59 @@
+.firstBlock{
+    align-items: center;
+    display: flex;
+    height: calc(100% - 100px);
+    height: 550px;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+.background-color{
+    background-size: 110%;
+    background-color: black;
+}
+h1{
+    color: white;
+    text-align: center;
+    font-weight: 400;
+}
+.foto1{
+    width: 128px;
+    height: 128px;
+    margin-left: 100px;
+}
+.spells{
+    align-items: center;
+    background-color: #141313;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    padding: 15px;
+    width: 300px;
+}
+p{
+    color: white;
+}
+.spell__list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0 auto;
+    overflow-y: scroll;
+    height: 500px;
+    margin-top: 0%;
+    position: static;
+}
+h2{
+    color: white;
+}
+.spells__group {
+    display: flex;
+    justify-content: space-around;
+    top: 100px;
+}
