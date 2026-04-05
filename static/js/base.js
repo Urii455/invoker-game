@@ -6,10 +6,54 @@ function showToast(msg, duration = 5000) {
 }
 
 
-const btn = document.getElementById('btn');
+const abilities = ['Cold Snap', 'Ghost Walk', 'Ice Wall', 'EMP', 'Tornado', 
+  'Alacrity', 'Sun Strike', 'Forge Spirit', 'Chaos Meteor', 'Deafening Blast'];
+let currentIndex = 0;
+let timerInterval = null;
 
-console.log(':( :( :( :( :( :( :( :(');
+function startTimer() {
+    fetch('/start-timer', { method: 'POST' })
+        .then(() => {
+            updateTimer();
+            timerInterval = setInterval(updateTimer, 1000);
+        });
+}
 
-btn.addEventListener('click', async () => {
-  console.log(':( :( :( :( :( :( :( :(');
-})
+function updateTimer() {
+    fetch('/get-time')
+        .then(response => response.json())
+        .then(data => {
+            if (data.running) {
+                document.getElementById('timer').innerHTML = 'Время: ' + data.time + ' секунд';
+            }
+        });
+}
+
+function stopTimer() {
+    fetch('/stop-timer', { method: 'POST' });
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+}
+
+function showNextAbility() {
+    let messageBox = document.getElementById('messageBox');
+    let number = document.getElementById('number');
+    
+    if (currentIndex < abilities.length) {
+        if (currentIndex === 0) {
+            startTimer();
+        }
+        
+        messageBox.innerHTML = abilities[currentIndex];
+        number.innerHTML = currentIndex + 1;
+        currentIndex++;
+        
+        if (currentIndex === abilities.length) {
+            stopTimer();
+        }
+    } else {
+        messageBox.innerHTML = "конец";
+    }
+}
