@@ -11,6 +11,10 @@ const abilities = ['Cold Snap', 'Ghost Walk', 'Ice Wall', 'EMP', 'Tornado',
 let currentIndex = 0;
 let timerInterval = null;
 
+function resetPage() {
+    location.reload();
+}
+
 function showNextAbility() {
     let messageBox = document.getElementById('messageBox');
     let number = document.getElementById('number');
