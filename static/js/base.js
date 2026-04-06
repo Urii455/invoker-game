@@ -11,39 +11,21 @@ const abilities = ['Cold Snap', 'Ghost Walk', 'Ice Wall', 'EMP', 'Tornado',
 let currentIndex = 0;
 let timerInterval = null;
 
-function startTimer() {
-    fetch('/start-timer', { method: 'POST' })
-        .then(() => {
-            updateTimer();
-            timerInterval = setInterval(updateTimer, 1000);
-        });
-}
-
-function updateTimer() {
-    fetch('/get-time')
-        .then(response => response.json())
-        .then(data => {
-            if (data.running) {
-                document.getElementById('timer').innerHTML = 'Время: ' + data.time + ' секунд';
-            }
-        });
-}
-
-function stopTimer() {
-    fetch('/stop-timer', { method: 'POST' });
-    if (timerInterval) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-    }
-}
-
 function showNextAbility() {
     let messageBox = document.getElementById('messageBox');
     let number = document.getElementById('number');
     
     if (currentIndex < abilities.length) {
         if (currentIndex === 0) {
-            startTimer();
+            fetch('/start-timer');
+            timerInterval = setInterval(function() {
+                fetch('/get-time')
+                    .then(response => response.json())
+                    .then(data => {
+                        let seconds = data.time.toFixed(3);
+                        document.getElementById('timer').innerHTML = 'Время: ' + seconds + ' секунд';
+                    });
+            }, 50);
         }
         
         messageBox.innerHTML = abilities[currentIndex];
@@ -51,7 +33,8 @@ function showNextAbility() {
         currentIndex++;
         
         if (currentIndex === abilities.length) {
-            stopTimer();
+            fetch('/stop-timer');
+            clearInterval(timerInterval);
         }
     } else {
         messageBox.innerHTML = "конец";
