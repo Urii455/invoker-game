@@ -6,13 +6,35 @@ function showToast(msg, duration = 5000) {
 }
 
 
-const abilities = ['Cold Snap', 'Ghost Walk', 'Ice Wall', 'EMP', 'Tornado', 
+// Функция для перемешивания массива
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+const originalAbilities = ['Cold Snap', 'Ghost Walk', 'Ice Wall', 'EMP', 'Tornado', 
   'Alacrity', 'Sun Strike', 'Forge Spirit', 'Chaos Meteor', 'Deafening Blast'];
+
+let abilities = shuffleArray([...originalAbilities]);
 let currentIndex = 0;
 let timerInterval = null;
 
 function resetPage() {
-    location.reload();
+    abilities = shuffleArray([...originalAbilities]);
+    currentIndex = 0;
+    
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    
+    document.getElementById('messageBox').innerHTML = '';
+    document.getElementById('number').innerHTML = '';
+    document.getElementById('timer').innerHTML = 'Время: 0.000 секунд';
+    fetch('/stop-timer');
 }
 
 function showNextAbility() {
