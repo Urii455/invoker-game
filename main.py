@@ -9,8 +9,18 @@ app = Flask(__name__)
 
 start_time = None
 timer_running = False
-abilities = ['Cold Snap', 'Ghost Walk', 'Ice Wall', 'EMP', 'Tornado', 
-    'Alacrity', 'Sun Strike', 'Forge Spirit', 'Chaos Meteor', 'Deafening Blast']  
+abilities = ['Cold Snap', 'Ghost Walk', 'Ice Wall', 'EMP', 'Tornado',
+    'Alacrity', 'Sun Strike', 'Forge Spirit', 'Chaos Meteor', 'Deafening Blast']
+sk1 = 'Cold Snap - Q Q Q'
+sk2 = 'Ghost Walk - Q Q W'
+sk3 = 'Ice Wall - Q Q E'
+sk4 = 'EMP - W W W'
+sk5 = 'Tornado - W W Q'
+sk6 = 'Alacrity - W W E'
+sk7 = 'Sun Strike - E E E'
+sk8 = 'Forge Spirit - E E Q'
+sk9 = 'Chaos Meteor - E E W'
+sk10 = 'Deafening Blast - Q W E'
 shuffled = abilities[:]
 random.shuffle(shuffled)
 
@@ -41,4 +51,4 @@ def stop_timer():
 
 
 if __name__ == '__main__':
-    app.run(port=8080, host='127.0.0.1')    
+    app.run(port=8080, host='127.0.0.1')
