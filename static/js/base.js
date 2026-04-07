@@ -5,6 +5,17 @@ function showToast(msg, duration = 5000) {
   t.show();
 }
 
+const sk1 = 'Cold Snap - Q Q Q'
+const sk2 = 'Ghost Walk - Q Q W'
+const sk3 = 'Ice Wall - Q Q E'
+const sk4 = 'EMP - W W W'
+const sk5 = 'Tornado - W W Q'
+const sk6 = 'Alacrity - W W E'
+const sk7 = 'Sun Strike - E E E'
+const sk8 = 'Forge Spirit - E E Q'
+const sk9 = 'Chaos Meteor - E E W'
+const sk10 = 'Deafening Blast - Q W E'
+
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
