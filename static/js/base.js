@@ -227,11 +227,9 @@ async function showNextAbility() {
     if (currentIndex < abilities.length) {
         currentAbility = abilities[currentIndex];
         
-        // Обновляем текст
         messageBox.innerHTML = currentAbility;
         number.innerHTML = currentIndex + 1;
         
-        // Обновляем изображение
         if (abilityImages[currentAbility] && abilityImages[currentAbility] !== '') {
             abilityImg.src = abilityImages[currentAbility];
             abilityImg.style.display = 'block';
@@ -245,17 +243,14 @@ async function showNextAbility() {
         if (currentIndex === abilities.length) {
             gameCompleted = true;
             
-            // Останавливаем таймер и получаем финальное время
             const elapsedTime = stopTimer();
             
-            // Сохраняем время
             await saveLastTimeToJSON(elapsedTime);
             
             console.log(`Все способности завершены! Время: ${elapsedTime.toFixed(3)} секунд`);
             messageBox.innerHTML = "ИГРА ЗАВЕРШЕНА! 🎉";
             showToast(`Игра завершена! Время: ${elapsedTime.toFixed(3)} секунд`, 4000);
             
-            // Скрываем изображение при завершении
             abilityImg.style.display = 'none';
         }
     } else {

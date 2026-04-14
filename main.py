@@ -11,7 +11,6 @@ app.secret_key = 'invoker_secret_key_12345'
 start_time = None
 timer_running = False
 
-# Соответствие способностей и комбинаций клавиш
 ability_combinations = {
     'Cold Snap': ['Q', 'Q', 'Q'],
     'Ghost Walk': ['Q', 'Q', 'W'],
@@ -27,7 +26,6 @@ ability_combinations = {
 
 abilities = list(ability_combinations.keys())
 
-# Функция для загрузки предыдущего времени
 def load_previous_time():
     try:
         if os.path.exists('last_time.json'):
@@ -38,7 +36,6 @@ def load_previous_time():
         print(f"Ошибка загрузки previous_time: {e}")
     return None
 
-# Функция для сохранения времени и сравнения
 def save_time_with_comparison(current_time):
     previous_time = load_previous_time()
     
@@ -48,11 +45,9 @@ def save_time_with_comparison(current_time):
         'date': time.strftime('%Y-%m-%d %H:%M:%S')
     }
     
-    # Сохраняем в файл на сервере
     with open('last_time.json', 'w', encoding='utf-8') as f:
         json.dump(save_data, f, indent=2, ensure_ascii=False)
     
-    # Сравниваем с предыдущим результатом
     comparison = None
     if previous_time is not None:
         difference = previous_time - current_time
@@ -85,7 +80,6 @@ def save_time_with_comparison(current_time):
 
 @app.route('/')
 def index():
-    # Перемешиваем способности при каждом обновлении страницы
     shuffled = abilities[:]
     random.shuffle(shuffled)
     previous_time = load_previous_time()
@@ -121,7 +115,6 @@ def save_time():
         if time_value is None:
             return jsonify({'error': 'No time provided'}), 400
         
-        # Сохраняем время и получаем сравнение
         comparison = save_time_with_comparison(float(time_value))
         
         return jsonify({
