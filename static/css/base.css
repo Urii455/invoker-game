@@ -57,3 +57,23 @@ h2{
     justify-content: space-around;
     top: 100px;
 }
+.ability-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.ability-image {
+    margin-bottom: 15px;
+}
+
+.ability-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.ability-number {
+    font-size: 18px;
+    color: #666;
+    margin-top: 5px;
+}
