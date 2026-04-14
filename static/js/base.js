@@ -28,6 +28,71 @@ let timerInterval = null;
 let gameCompleted = false;
 let startTime = null;
 let finalTime = null;
+const DEBUG_MODE = false;
+
+const playSound = (soundName) => {
+    if (DEBUG_MODE) console.log(`[SOUND] Playing: ${soundName}`);
+};
+
+const trackEvent = (eventName, eventData) => {
+    if (DEBUG_MODE) console.log(`[ANALYTICS] ${eventName}:`, eventData);
+};
+
+const storage = {
+    save: (key, value) => {
+        try {
+            localStorage.setItem(`invoker_${key}`, JSON.stringify(value));
+            return true;
+        } catch (e) {
+            console.warn('Storage save failed:', e);
+            return false;
+        }
+    },
+    load: (key, defaultValue = null) => {
+        try {
+            const item = localStorage.getItem(`invoker_${key}`);
+            return item ? JSON.parse(item) : defaultValue;
+        } catch (e) {
+            console.warn('Storage load failed:', e);
+            return defaultValue;
+        }
+    },
+    remove: (key) => {
+        try {
+            localStorage.removeItem(`invoker_${key}`);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    },
+    clear: () => {
+        try {
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('invoker_')) localStorage.removeItem(key);
+            });
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+};
+
+const perfMonitor = {
+    marks: new Map(),
+    start: (label) => {
+        perfMonitor.marks.set(label, performance.now());
+    },
+    end: (label) => {
+        const startTime = perfMonitor.marks.get(label);
+        if (startTime) {
+            const duration = performance.now() - startTime;
+            if (DEBUG_MODE) console.log(`[PERF] ${label}: ${duration.toFixed(2)}ms`);
+            perfMonitor.marks.delete(label);
+            return duration;
+        }
+        return null;
+    }
+};
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -282,3 +347,178 @@ setInterval(updateTime, 1000);
 
 console.log('Используйте R для старта');
 console.log('Нажимайте Q, W, E в правильном порядке для каждого скилла');
+// Keyboard helper functions
+const isModifierKey = (key) => {
+    const modifiers = ['CONTROL', 'ALT', 'SHIFT', 'META', 'CAPS_LOCK', 'NUM_LOCK', 'SCROLL_LOCK'];
+    return modifiers.includes(key.toUpperCase());
+};
+
+const isArrowKey = (key) => {
+    const arrows = ['ARROWUP', 'ARROWDOWN', 'ARROWLEFT', 'ARROWRIGHT'];
+    return arrows.includes(key.toUpperCase());
+};
+
+const getKeyDisplayName = (key) => {
+    const keyMap = {
+        'Q': 'Q', 'W': 'W', 'E': 'E', 'R': 'R',
+        ' ': 'SPACE', 'ENTER': 'ENTER', 'TAB': 'TAB',
+        'ESCAPE': 'ESC', 'BACKSPACE': 'BACKSPACE', 'DELETE': 'DEL'
+    };
+    return keyMap[key.toUpperCase()] || key;
+};
+
+// UI helper functions
+const setElementVisibility = (elementId, visible) => {
+    const el = document.getElementById(elementId);
+    if (el) el.style.display = visible ? 'block' : 'none';
+};
+
+const setElementText = (elementId, text) => {
+    const el = document.getElementById(elementId);
+    if (el) el.textContent = text;
+};
+
+const addClassToElement = (elementId, className) => {
+    const el = document.getElementById(elementId);
+    if (el) el.classList.add(className);
+};
+
+const removeClassFromElement = (elementId, className) => {
+    const el = document.getElementById(elementId);
+    if (el) el.classList.remove(className);
+};
+
+const toggleClassOnElement = (elementId, className) => {
+    const el = document.getElementById(elementId);
+    if (el) el.classList.toggle(className);
+};
+
+// Validation functions
+const isValidAbilityName = (name) => {
+    if (!name || typeof name !== 'string') return false;
+    return originalAbilities.includes(name);
+};
+
+const isValidKeyPress = (key) => {
+    const validKeys = ['Q', 'W', 'E', 'R'];
+    return validKeys.includes(key.toUpperCase());
+};
+
+const isValidCombination = (combination) => {
+    if (!Array.isArray(combination)) return false;
+    if (combination.length !== 3) return false;
+    return combination.every(key => ['Q', 'W', 'E'].includes(key));
+};
+
+// String formatting helpers
+const formatTime = (seconds) => {
+    if (typeof seconds !== 'number' || isNaN(seconds)) return '0.000';
+    return seconds.toFixed(3);
+};
+
+const formatCombination = (combo) => {
+    if (!Array.isArray(combo)) return '';
+    return combo.join(' → ');
+};
+
+const formatAbilityList = (list, separator = ', ') => {
+    if (!Array.isArray(list)) return '';
+    return list.join(separator);
+};
+
+const truncateString = (str, maxLength = 50) => {
+    if (!str || str.length <= maxLength) return str;
+    return str.substring(0, maxLength) + '...';
+};
+
+// Array helper functions
+const arrayEquals = (a, b) => {
+    if (!Array.isArray(a) || !Array.isArray(b)) return false;
+    if (a.length !== b.length) return false;
+    return a.every((val, idx) => val === b[idx]);
+};
+
+const removeDuplicates = (arr) => {
+    if (!Array.isArray(arr)) return [];
+    return [...new Set(arr)];
+};
+
+const getRandomElement = (arr) => {
+    if (!Array.isArray(arr) || arr.length === 0) return null;
+    return arr[Math.floor(Math.random() * arr.length)];
+};
+
+const getLastElement = (arr) => {
+    if (!Array.isArray(arr) || arr.length === 0) return null;
+    return arr[arr.length - 1];
+};
+
+const getFirstElement = (arr) => {
+    if (!Array.isArray(arr) || arr.length === 0) return null;
+    return arr[0];
+};
+
+// Cookie helper functions
+const setCookie = (name, value, days = 7) => {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+};
+
+const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+};
+
+const deleteCookie = (name) => {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+};
+
+// URL helper functions
+const getUrlParameter = (name) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+};
+
+const setUrlParameter = (name, value) => {
+    const url = new URL(window.location.href);
+    url.searchParams.set(name, value);
+    window.history.pushState({}, '', url);
+};
+
+const removeUrlParameter = (name) => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete(name);
+    window.history.pushState({}, '', url);
+};
+
+// DOM ready check
+const domReady = (callback) => {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', callback);
+    } else {
+        callback();
+    }
+};
+
+// Debounce and throttle
+const debounce = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func.apply(this, args), delay);
+    };
+};
+
+const throttle = (func, limit) => {
+    let inThrottle;
+    return (...args) => {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+};
