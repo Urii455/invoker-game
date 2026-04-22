@@ -347,7 +347,6 @@ setInterval(updateTime, 1000);
 
 console.log('Используйте R для старта');
 console.log('Нажимайте Q, W, E в правильном порядке для каждого скилла');
-// Keyboard helper functions
 const isModifierKey = (key) => {
     const modifiers = ['CONTROL', 'ALT', 'SHIFT', 'META', 'CAPS_LOCK', 'NUM_LOCK', 'SCROLL_LOCK'];
     return modifiers.includes(key.toUpperCase());
@@ -367,7 +366,6 @@ const getKeyDisplayName = (key) => {
     return keyMap[key.toUpperCase()] || key;
 };
 
-// UI helper functions
 const setElementVisibility = (elementId, visible) => {
     const el = document.getElementById(elementId);
     if (el) el.style.display = visible ? 'block' : 'none';
@@ -393,7 +391,6 @@ const toggleClassOnElement = (elementId, className) => {
     if (el) el.classList.toggle(className);
 };
 
-// Validation functions
 const isValidAbilityName = (name) => {
     if (!name || typeof name !== 'string') return false;
     return originalAbilities.includes(name);
@@ -410,7 +407,6 @@ const isValidCombination = (combination) => {
     return combination.every(key => ['Q', 'W', 'E'].includes(key));
 };
 
-// String formatting helpers
 const formatTime = (seconds) => {
     if (typeof seconds !== 'number' || isNaN(seconds)) return '0.000';
     return seconds.toFixed(3);
@@ -431,7 +427,6 @@ const truncateString = (str, maxLength = 50) => {
     return str.substring(0, maxLength) + '...';
 };
 
-// Array helper functions
 const arrayEquals = (a, b) => {
     if (!Array.isArray(a) || !Array.isArray(b)) return false;
     if (a.length !== b.length) return false;
@@ -458,7 +453,6 @@ const getFirstElement = (arr) => {
     return arr[0];
 };
 
-// Cookie helper functions
 const setCookie = (name, value, days = 7) => {
     const expires = new Date();
     expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
@@ -476,7 +470,6 @@ const deleteCookie = (name) => {
     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 };
 
-// URL helper functions
 const getUrlParameter = (name) => {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(name);
@@ -494,7 +487,6 @@ const removeUrlParameter = (name) => {
     window.history.pushState({}, '', url);
 };
 
-// DOM ready check
 const domReady = (callback) => {
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', callback);
@@ -503,7 +495,6 @@ const domReady = (callback) => {
     }
 };
 
-// Debounce and throttle
 const debounce = (func, delay) => {
     let timeoutId;
     return (...args) => {
