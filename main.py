@@ -142,4 +142,4 @@ def check_combination():
     return jsonify({'correct': False, 'error': 'Ability not found'})
 
 if __name__ == '__main__':
-    app.run(port=8080, host='127.0.0.1', debug=True)
+    app.run(port=8080, host='127.0.0.1', debug=True) 
