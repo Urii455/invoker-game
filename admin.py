@@ -1,7 +1,3 @@
-# admin.py
-# Расширенная консольная административная панель с системой логирования и управления пользователями
-# Общее количество строк: ~420 (включая комментарии и документацию)
-
 import json
 import os
 import datetime
@@ -12,7 +8,7 @@ from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, asdict
 from enum import Enum
 
-# ================== Класс для уровней доступа ==================
+
 class UserRole(Enum):
     GUEST = 0
     USER = 1
@@ -20,7 +16,7 @@ class UserRole(Enum):
     ADMIN = 3
     SUPER_ADMIN = 4
 
-# ================== Структура пользователя ==================
+
 @dataclass
 class User:
     username: str
@@ -32,7 +28,7 @@ class User:
     is_active: bool = True
     login_attempts: int = 0
 
-# ================== Система логирования ==================
+
 class Logger:
     def __init__(self, log_file: str = "admin_log.txt"):
         self.log_file = log_file
@@ -65,7 +61,6 @@ class Logger:
     def critical(self, message: str):
         self.log("CRITICAL", message)
 
-# ================== Менеджер пользователей ==================
 class UserManager:
     def __init__(self, data_file: str = "users.json", logger: Logger = None):
         self.data_file = data_file
@@ -210,7 +205,6 @@ class UserManager:
             self.logger.info(f"Выход пользователя {self.current_user.username}")
             self.current_user = None
 
-# ================== Менеджер задач (Todo) ==================
 class TaskManager:
     def __init__(self, task_file: str = "tasks.json", logger: Logger = None):
         self.task_file = task_file
@@ -260,7 +254,6 @@ class TaskManager:
                 result.append(task)
         return result
 
-# ================== Система резервного копирования ==================
 class BackupManager:
     def __init__(self, backup_dir: str = "backups", logger: Logger = None):
         self.backup_dir = backup_dir
@@ -287,7 +280,6 @@ class BackupManager:
     def list_backups(self) -> List[str]:
         return [f for f in os.listdir(self.backup_dir) if f.endswith('.bak')]
 
-# ================== Главное меню администратора ==================
 class AdminPanel:
     def __init__(self):
         self.logger = Logger()
@@ -483,7 +475,6 @@ class AdminPanel:
                 print("\n  До свидания!")
                 break
 
-# ================== Точка входа ==================
 if __name__ == "__main__":
     panel = AdminPanel()
     panel.run()
