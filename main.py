@@ -7,6 +7,7 @@ from functools import wraps
 
 app = Flask(__name__)
 app.secret_key = 'invoker_secret_key_12345'
+token = []
 
 start_time = None
 timer_running = False
